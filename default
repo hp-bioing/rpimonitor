@@ -1,0 +1,139 @@
+# Thermoelement
+dynamic.1.name=temp1OelbadBlase
+dynamic.1.source=/tmp/thermocouple
+dynamic.1.regexp=([0-9.]+)
+dynamic.1.postprocess=
+dynamic.1.rrd=GAUGE
+
+# Temp in Blase via DS
+dynamic.2.name=temp2Blase
+dynamic.2.source=/sys/bus/w1/devices/28-00000487dc41/w1_slave
+dynamic.2.regexp=t=(\d+)$
+dynamic.2.postprocess=$1/1000
+dynamic.2.rrd=GAUGE
+
+# Umgebungs-Temp von barometrischer Sensor
+dynamic.3.name=temp3Umgebung
+dynamic.3.source=bmp085
+dynamic.3.regexp=temp:\s([0-9.]+)
+dynamic.3.postprocess=
+dynamic.3.rrd=GAUGE
+
+# T_Kopf via PT1000
+dynamic.4.name=temp4Kopf
+dynamic.4.source=/sys/bus/w1/devices/28-000004881308/w1_slave
+dynamic.4.regexp=t=(\d+)$
+dynamic.4.postprocess=$1/1000
+dynamic.4.rrd=GAUGE
+
+# KW-Zulauf-Temp via DS
+dynamic.5.name=temp5KWZulauf
+dynamic.5.source=/sys/bus/w1/devices/28-000004881d20/w1_slave
+dynamic.5.regexp=t=(\d+)$
+dynamic.5.postprocess=$1/1000
+dynamic.5.rrd=GAUGE
+
+# KW-Ablauf-Temp via DS
+dynamic.6.name=temp6KWAblauf
+dynamic.6.source=/sys/bus/w1/devices/28-00000488947e/w1_slave
+dynamic.6.regexp=t=(\d+)$
+dynamic.6.postprocess=$1/1000
+dynamic.6.rrd=GAUGE
+
+# Destillat-Temp nach Kuehler via DS
+dynamic.7.name=temp7PostKuehler
+dynamic.7.source=/sys/bus/w1/devices/28-00000488b8cc/w1_slave
+dynamic.7.regexp=t=(\d+)$
+dynamic.7.postprocess=$1/1000
+dynamic.7.rrd=GAUGE
+
+# Destillat-Temp via DS
+dynamic.8.name=temp8Destillat
+dynamic.8.source=/sys/bus/w1/devices/28-0000048804b2/w1_slave
+dynamic.8.regexp=t=(\d+)$
+dynamic.8.postprocess=$1/1000
+dynamic.8.rrd=GAUGE
+
+# Umgebungsdruck via barometrischem Drucksensor
+dynamic.9.name=Umgebungsdruck
+dynamic.9.source=bmp085
+dynamic.9.regexp=pressure:\s([0-9.]+)
+dynamic.9.postprocess=
+dynamic.9.rrd=GAUGE
+
+# Umgebungsdruck via barometrischem Drucksensor
+dynamic.9.name=Umgebungsdruck
+dynamic.9.source=bmp085
+dynamic.9.regexp=pressure:\s([0-9.]+)
+dynamic.9.postprocess=
+dynamic.9.rrd=GAUGE
+
+# Ultraschallmodul zur Füllstandsueberwachung
+dynamic.10.name=DestTankLevel
+dynamic.10.source=ultrasonic
+dynamic.10.regexp=Distance:\s(\d+)
+dynamic.10.postprocess=
+dynamic.10.rrd=GAUGE
+
+
+#############################
+web.status.1.name=Raspberry Pi
+
+web.status.1.content.1.name=Umgebung
+web.status.1.content.1.icon=building.png
+web.status.1.content.1.line.1="T04: <b>"+data.temp3Umgebung+" &deg;C</b> - Temperatur"
+web.status.1.content.1.line.2="P05: <b>"+data.Umgebungsdruck+" hPa</b> - Druck"
+
+web.status.1.content.2.name=Blase
+web.status.1.content.2.icon=blase.png
+web.status.1.content.2.line.1="T01: <b>"+data.temp1OelbadBlase+" &deg;C</b> - Oelbad Blase"
+web.status.1.content.2.line.2="T02: <b>"+data.temp2Blase+" &deg;C</b> - Blase"
+
+web.status.1.content.3.name=Kuehler
+web.status.1.content.3.icon=Liebigkuehler.png
+web.status.1.content.3.line.1="T06: <b>"+data.temp4Kopf+" &deg;C</b> - Kopf"
+web.status.1.content.3.line.2="T07: <b>"+data.temp5KWZulauf+" &deg;C</b> - Kuehlwasser Zulauf"
+web.status.1.content.3.line.3="T08: <b>"+data.temp6KWAblauf+" &deg;C</b> - Kuehlwasser Ablauf"
+web.status.1.content.3.line.4="T09: <b>"+data.temp7PostKuehler+" &deg;C</b> - gekuehltes Destillat"
+
+web.status.1.content.4.name=Destillatsammler
+web.status.1.content.4.icon=WaterTank.png
+web.status.1.content.4.line.1="L15: <b>"+data.DestTankLevel+" cm</b> - Fuellstand Destillatsammler"
+web.status.1.content.4.line.2="T17: <b>"+data.temp8Destillat+" &deg;C</b> - Temperatur Destillatsammler"
+
+
+###############################
+web.statistics.1.name=Raspberry Pi
+web.statistics.1.content.1.name=Temperaturen
+
+web.statistics.1.content.1.graph.1=temp1OelbadBlase
+web.statistics.1.content.1.ds_graph_options.temp1OelbadBlase.label=Temp. Oelbad Blase (deg C)
+
+web.statistics.1.content.1.graph.2=temp2Blase
+web.statistics.1.content.1.ds_graph_options.temp2Blase.label=Temp. Blase (deg C)
+
+web.statistics.1.content.1.graph.3=temp3Umgebung
+web.statistics.1.content.1.ds_graph_options.temp3Umgebung.label=Temp. Umgebung (deg C)
+
+web.statistics.1.content.1.graph.4=temp4Kopf
+web.statistics.1.content.1.ds_graph_options.temp4Kopf.label=Temp. Kopf (deg C)
+
+web.statistics.1.content.1.graph.5=temp5KWZulauf
+web.statistics.1.content.1.ds_graph_options.temp5KWZulauf.label=Temp. Kuehlwasser Zulauf (deg C)
+
+web.statistics.1.content.1.graph.6=temp6KWAblauf
+web.statistics.1.content.1.ds_graph_options.temp6KWAblauf.label=Temp. Kuehlwasser Ablauf (deg C)
+
+web.statistics.1.content.1.graph.7=temp7PostKuehler
+web.statistics.1.content.1.ds_graph_options.temp7PostKuehler.label=Temp. Destillat nach Kuehler (deg C)
+
+web.statistics.1.content.1.graph.8=temp8Destillat
+web.statistics.1.content.1.ds_graph_options.temp8Destillat.label=Temp. Destillatsammler (deg C)
+
+web.statistics.1.content.2.name=Umgebung
+web.statistics.1.content.2.graph.1=temp3Umgebung
+web.statistics.1.content.2.graph.2=Umgebungsdruck
+web.statistics.1.content.2.ds_graph_options.temp3Umgebung.label=Umgebungstemperatur (dec C)
+web.statistics.1.content.2.ds_graph_options.Umgebungsdruck.label=Umgebungsdruck (hPa)
+web.statistics.1.content.2.ds_graph_options.Umgebungsdruck.yaxis=2
+web.statistics.1.content.2.graph_options.y2axis={ position: "right"}
